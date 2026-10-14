@@ -1,0 +1,221 @@
+body {
+  display: flex;
+  justify-items: center;
+  padding: 0 40px;
+  margin: 0;
+  background: #444;
+}
+@media (max-width: 900px) {
+  body {
+    flex-wrap: wrap;
+  }
+}
+
+#orbitContain {
+  position: relative;
+  margin-left: 40px;
+}
+#orbitContain .text {
+  position: absolute;
+  right: 80px;
+  bottom: 20px;
+  width: 150px;
+  height: 50px;
+  font-size: 12px;
+  font-family: Helvetica;
+  color: #ccc;
+}
+#orbitContain .text div {
+  position: relative;
+  text-align: right;
+}
+#orbitContain .text div:after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: -38px;
+  width: 30px;
+  height: 2px;
+}
+#orbitContain .text div.moon:after {
+  border-top: 2px dotted #5aa;
+}
+#orbitContain .text div.phase:after {
+  border-top: 2px solid #7c7c7c;
+}
+#orbitContain .text div.perigee:after {
+  border-top: 2px dotted #bbb;
+}
+#orbitContain .text div.sun:after {
+  border-top: 2px dotted #cc5;
+}
+#orbitContain .text div.tide:after {
+  border-top: 2px solid #5aa;
+}
+
+@keyframes sunSize {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#sunSize {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  padding: 40px;
+  border-radius: 100%;
+  background: #cc5;
+  animation: sunSize 1s infinite;
+  animation-play-state: paused;
+}
+
+@keyframes earthTilt {
+  0% {
+    transform: rotate(23.43deg);
+  }
+  50% {
+    transform: rotate(-23.43deg);
+  }
+  100% {
+    transform: rotate(23.43deg);
+  }
+}
+#earthTilt {
+  transform: rotate(23.43deg);
+  position: absolute;
+  top: 185px;
+  left: 40px;
+  padding: 40px;
+}
+#earthTilt:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 40px;
+  border-radius: 100%;
+  background: linear-gradient(90deg, #5aa 50%, #377 50%);
+  animation: earthTilt 1s infinite;
+  animation-delay: inherit;
+  animation-play-state: paused;
+}
+#earthTilt:after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  bottom: -15px;
+  left: calc(50% - 1px);
+  border-left: 2px dotted #7c7c7c;
+}
+
+@keyframes moonSize {
+  0% {
+    transform: scale(1.14);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.14);
+  }
+}
+#moonSize {
+  position: absolute;
+  top: 340px;
+  left: 47px;
+  animation: moonSize 1s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes moonPhaseBg {
+  0% {
+    background: linear-gradient(90deg, #bbb 50%, #7c7c7c 50%);
+  }
+  49.9% {
+    background: linear-gradient(90deg, #bbb 50%, #7c7c7c 50%);
+  }
+  50% {
+    background: linear-gradient(-90deg, #bbb 50%, #7c7c7c 50%);
+  }
+  100% {
+    background: linear-gradient(-90deg, #bbb 50%, #7c7c7c 50%);
+  }
+}
+@keyframes moonPhaseFg {
+  0% {
+    transform: scale(1, 1);
+    background: #bbb;
+  }
+  24.9% {
+    transform: scale(0, 1);
+    background: #bbb;
+  }
+  25% {
+    transform: scale(0, 1);
+    background: #7c7c7c;
+  }
+  49.9% {
+    transform: scale(-1, 1);
+    background: #7c7c7c;
+  }
+  50% {
+    transform: scale(1, 1);
+    background: #7c7c7c;
+  }
+  74.9% {
+    transform: scale(0, 1);
+    background: #7c7c7c;
+  }
+  75% {
+    transform: scale(0, 1);
+    background: #bbb;
+  }
+  100% {
+    transform: scale(-1, 1);
+    background: #bbb;
+  }
+}
+#moonPhase {
+  padding: 36px;
+  border-radius: 100%;
+  overflow: hidden;
+  animation: moonPhaseBg linear infinite;
+  animation-duration: 1s;
+  animation-delay: -2s;
+  animation-play-state: paused;
+}
+#moonPhase:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+  animation: moonPhaseFg linear infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+  animation-play-state: inherit;
+}
+
+#waveContain {
+  overflow-x: scroll;
+}
+#waveContain::-webkit-scrollbar {
+  width: 4px;
+}
+#waveContain::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: #666;
+}
+#waveContain::-webkit-scrollbar-track:hover {
+  background: #4a4a4a;
+}

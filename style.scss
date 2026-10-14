@@ -1,0 +1,267 @@
+$bg: #444;
+$bg-l: #4a4a4a;
+$bg-ll: #666;
+$sun: #cc5;
+$sea: #5aa;
+$sea-d: #377;
+$moon: #bbb;
+$moon-d: #7c7c7c;
+$text: #ccc;
+
+body {
+    display: flex;
+    justify-items: center;
+    padding: 0 40px;
+    margin: 0;
+    background: $bg;
+
+    @media (max-width: 900px) {
+        flex-wrap: wrap;
+    }
+}
+
+#orbitContain {
+    position: relative;
+    margin-left: 40px;
+
+    .text {
+        position: absolute;
+        right: 80px;
+        bottom: 20px;
+        width: 150px;
+        height: 50px;
+        font-size: 12px;
+        font-family: Helvetica;
+        color: $text;
+
+        div {
+            position: relative;
+            text-align: right;
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 6px;
+                right: -38px;
+                width: 30px;
+                height: 2px;
+            }
+
+            &.moon:after {
+                border-top: 2px dotted $sea;
+            }
+
+            &.phase:after {
+                border-top: 2px solid $moon-d;
+            }
+
+            &.perigee:after {
+                border-top: 2px dotted $moon;
+            }
+
+            &.sun:after {
+                border-top: 2px dotted $sun;
+            }
+
+            &.tide:after {
+                border-top: 2px solid $sea;
+            }
+        }
+    }
+}
+
+#sunSize {
+    @keyframes sunSize {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.08);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    padding: 40px;
+    border-radius: 100%;
+    background: $sun;
+    animation: sunSize 1s infinite;
+    animation-play-state: paused;
+}
+
+#earthTilt {
+    $tilt: 23.43deg;
+
+    @keyframes earthTilt {
+        0% {
+            transform: rotate($tilt);
+        }
+
+        50% {
+            transform: rotate(-$tilt);
+        }
+
+        100% {
+            transform: rotate($tilt);
+        }
+    }
+
+    transform: rotate($tilt);
+    position: absolute;
+    top: 185px;
+    left: 40px;
+    padding: 40px;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 40px;
+        border-radius: 100%;
+        background: linear-gradient(90deg, $sea 50%, $sea-d 50%);
+        animation: earthTilt 1s infinite;
+        animation-delay: inherit;
+        animation-play-state: paused;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: -15px;
+        bottom: -15px;
+        left: calc(50% - 1px);
+        border-left: 2px dotted $moon-d;
+    }
+}
+
+#moonSize {
+    @keyframes moonSize {
+        0% {
+            transform: scale(1.14);
+        }
+
+        50% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.14);
+        }
+    }
+
+    position: absolute;
+    top: 340px;
+    left: 47px;
+    animation: moonSize 1s linear infinite;
+    animation-play-state: paused;
+}
+
+#moonPhase {
+    @keyframes moonPhaseBg {
+        0% {
+            background: linear-gradient(90deg, $moon 50%, $moon-d 50%);
+        }
+
+        49.9% {
+            background: linear-gradient(90deg, $moon 50%, $moon-d 50%);
+        }
+
+        50% {
+            background: linear-gradient(-90deg, $moon 50%, $moon-d 50%);
+        }
+
+        100% {
+            background: linear-gradient(-90deg, $moon 50%, $moon-d 50%);
+        }
+    }
+
+    @keyframes moonPhaseFg {
+        0% {
+            transform: scale(1, 1);
+            background: $moon;
+        }
+
+        24.9% {
+            transform: scale(0, 1);
+            background: $moon;
+        }
+
+        25% {
+            transform: scale(0, 1);
+            background: $moon-d;
+        }
+
+        49.9% {
+            transform: scale(-1, 1);
+            background: $moon-d;
+        }
+
+        50% {
+            transform: scale(1, 1);
+            background: $moon-d;
+        }
+
+        74.9% {
+            transform: scale(0, 1);
+            background: $moon-d;
+        }
+
+        75% {
+            transform: scale(0, 1);
+            background: $moon;
+        }
+
+        100% {
+            transform: scale(-1, 1);
+            background: $moon;
+        }
+    }
+
+    padding: 36px;
+    border-radius: 100%;
+    overflow: hidden;
+    animation: moonPhaseBg linear infinite;
+    animation-duration: 1s;
+    animation-delay: -2s;
+    animation-play-state: paused;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: 50%;
+        animation: moonPhaseFg linear infinite;
+        animation-duration: inherit;
+        animation-delay: inherit;
+        animation-play-state: inherit;
+    }
+}
+
+#waveContain {
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+
+        &-thumb {
+            border-radius: 6px;
+            background: $bg-ll;
+        }
+
+        &-track:hover {
+            background: $bg-l;
+        }
+    }
+}
