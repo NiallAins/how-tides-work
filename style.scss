@@ -14,15 +14,19 @@ body {
     padding: 0 40px;
     margin: 0;
     background: $bg;
+}
 
-    @media (max-width: 900px) {
-        flex-wrap: wrap;
-    }
+#bodyContain {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 100px;
 }
 
 #orbitContain {
     position: relative;
-    margin-left: 40px;
+    margin: 0 20px 0 -20px;
 
     .text {
         position: absolute;
@@ -85,9 +89,8 @@ body {
         }
     }
 
-    position: absolute;
-    top: 40px;
-    left: 40px;
+
+    display: inline-block;
     padding: 40px;
     border-radius: 100%;
     background: $sun;
@@ -113,9 +116,7 @@ body {
     }
 
     transform: rotate($tilt);
-    position: absolute;
-    top: 185px;
-    left: 40px;
+    display: inline-block;
     padding: 40px;
 
     &:before {
@@ -158,9 +159,7 @@ body {
         }
     }
 
-    position: absolute;
-    top: 340px;
-    left: 47px;
+    display: inline-block;
     animation: moonSize 1s linear infinite;
     animation-play-state: paused;
 }
@@ -226,6 +225,7 @@ body {
         }
     }
 
+    position: relative;
     padding: 36px;
     border-radius: 100%;
     overflow: hidden;
@@ -263,5 +263,46 @@ body {
         &-track:hover {
             background: $bg-l;
         }
+    }
+}
+
+@media (max-width: 1000px) {
+    body {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    #bodyContain,
+    #orbitContain {
+        max-width: 500px;
+        align-self: center;
+        margin: 0;
+        text-align: center;
+    }
+
+    #bodyContain {
+        width: calc(100% - 80px);
+        flex-direction: row;
+        padding: 40px 0;
+    }
+
+    #orbitContain {
+        width: 100%;
+        margin-bottom: -10px;
+    }
+
+    #orbitCan {
+        max-width: 100vw;
+        max-height: 100vw;
+        margin: -40px 0 28px 0;
+    }
+
+    #orbitContain .text {
+        right: calc(50% - 50px);
+        bottom: 16px;
+    }
+
+    #waveContain {
+        margin: 0 40px 40px;
     }
 }

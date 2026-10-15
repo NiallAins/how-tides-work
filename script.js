@@ -28,12 +28,27 @@ const
         perigee: [27.32, 9],
         perihelion: [365, 2]
     };
-oCan.width = 400;
-oCan.height = 400;
-oCtx.translate(200, 200);
-wCan.width = 365 * 60;
-wCan.height = 400;
-wCtx.translate(0, wCan.height / 2);
+
+const
+    oCanW = 400,
+    oCanH = oCanW,
+    wCanW = 365 * 60,
+    wCanH = oCanW,
+    canQ = 2;
+
+oCan.width = oCanW * canQ;
+oCan.height = oCanH * canQ;
+oCan.style.width = oCanW + 'px';
+oCan.style.height = oCanH + 'px';
+oCtx.scale(canQ, canQ);
+oCtx.translate(oCanW * 0.5, oCanH * 0.5);
+
+wCan.width = wCanW * canQ;
+wCan.height = wCanH * canQ;
+wCan.style.width = wCanW + 'px';
+wCan.style.height = wCanH + 'px';
+wCtx.scale(canQ, canQ);
+wCtx.translate(0, wCanH * 0.5);
 
 // Scroll listener
 document.getElementById('waveContain').addEventListener('scroll', function (e) {
@@ -174,7 +189,7 @@ wCtx.strokeStyle = col.bg_l;
 wCtx.lineWidth = 2;
 wCtx.beginPath();
 wCtx.moveTo(0, 0);
-wCtx.lineTo(wCan.width, 0);
+wCtx.lineTo(wCanW, 0);
 wCtx.stroke();
 
 function drawSine(params, color, width = 1, dashed = []) {
@@ -190,14 +205,14 @@ function drawSine(params, color, width = 1, dashed = []) {
     wCtx.strokeStyle = color;
     wCtx.lineWidth = width;
     wCtx.setLineDash(dashed);
-    for (let x = 0; x < wCan.width; x += 1) {
+    for (let x = 0; x < wCanW; x += 1) {
         let amp = params.reduce(
-            (t, p, i) => i === 0 ? t : t + (p.amp * Math.cos((p.period * (x / wCan.width)) - p.offset)),
+            (t, p, i) => i === 0 ? t : t + (p.amp * Math.cos((p.period * (x / wCanW)) - p.offset)),
             params[0].amp
         );
         wCtx.lineTo(
             x,
-            -1 * amp * Math.cos((params[0].period * (x / wCan.width)) - params[0].offset)
+            -1 * amp * Math.cos((params[0].period * (x / wCanW)) - params[0].offset)
         );
     }
     wCtx.stroke();
@@ -227,11 +242,11 @@ const
     monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 let currentDay = 0;
 monthDays.forEach((days, i) => {
-    let x = Math.floor((wCan.width / 365) * currentDay);
+    let x = Math.floor((wCanW / 365) * currentDay);
     wCtx.fillText(monthNames[i], x + 5, 15);
     currentDay += days;
 });
-wCtx.fillText('EQUINOX', (wCan.width / 365 * 78), -10);
-wCtx.fillText('SOLSTICE', (wCan.width / 365 * 171), -10);
-wCtx.fillText('EQUINOX', (wCan.width / 365 * 264), -10);
-wCtx.fillText('SOLSTICE', (wCan.width / 365 * 354), -10);
+wCtx.fillText('EQUINOX', (wCanW / 365 * 78), -10);
+wCtx.fillText('SOLSTICE', (wCanW / 365 * 171), -10);
+wCtx.fillText('EQUINOX', (wCanW / 365 * 264), -10);
+wCtx.fillText('SOLSTICE', (wCanW / 365 * 354), -10);
